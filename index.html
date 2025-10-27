@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Ajout de produits</title>
+</head>
+<body>
+  <h2>Ajout de Produit</h2>
+  <form id="sheetForm">
+    <input type="text" name="reference" placeholder="Référence"><br>
+    <input type="Marque" name="brand" placeholder="Marque" required><br>
+    <input type="text" name="model" placeholder="Modèle" required><br>
+    <input type="text" name="state" placeholder="État" required><br>
+    <input type="number" name="price" placeholder="Prix" ><br>
+    <button type="submit">Submit</button>
+  </form>
+
+  <p id="response"></p>
+
+  <script>
+    const scriptURL = "https://script.google.com/macros/s/AKfycby2z_c3Db_wfP9bVVav59sf-4OJ7pFIdSaHMvCRVBUOEmXxenahTAnsp00gGGJkx1llng/exec"; // paste your Apps Script URL here
+
+    document.getElementById('sheetForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const formData = new FormData(e.target);
+      const json = Object.fromEntries(formData.entries());
+
+      const res = await fetch(scriptURL, {
+        method: 'POST',
+        body: JSON.stringify(json),
+        headers: { 'Content-Type': 'application/json' }
+      });
+
+      const data = await res.json();
+      document.getElementById('response').textContent = data.message;
+      e.target.reset();
+    });
+  </script>
+</body>
+</html>
