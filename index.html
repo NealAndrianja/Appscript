@@ -1,40 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <title>Ajout de produits</title>
+    <meta charset="UTF-8">
+    <title>Ajout de produits</title>
 </head>
+
 <body>
-  <h2>Ajout de Produit</h2>
-  <form id="sheetForm">
-    <input type="text" name="reference" placeholder="Référence"><br>
-    <input type="Marque" name="brand" placeholder="Marque" required><br>
-    <input type="text" name="model" placeholder="Modèle" required><br>
-    <input type="text" name="state" placeholder="État" required><br>
-    <input type="number" name="price" placeholder="Prix" ><br>
-    <button type="submit">Submit</button>
-  </form>
+    <h2>Ajout de Produit</h2>
+    <form id="sheetForm">
+        <input type="text" name="reference" placeholder="Référence"><br>
+        <input type="Marque" name="brand" placeholder="Marque" required><br>
+        <input type="text" name="model" placeholder="Modèle" required><br>
+        <input type="text" name="state" placeholder="État" required><br>
+        <input type="number" name="price" placeholder="Prix"><br>
+        <button type="submit">Submit</button>
+    </form>
 
-  <p id="response"></p>
+    <p id="response"></p>
 
-  <script>
-    const scriptURL = "https://script.google.com/macros/s/AKfycby2z_c3Db_wfP9bVVav59sf-4OJ7pFIdSaHMvCRVBUOEmXxenahTAnsp00gGGJkx1llng/exec"; // paste your Apps Script URL here
+    <script>
+        const scriptURL = "https://script.google.com/macros/s/AKfycbwmk5m4H8IES6uCJobAIhGUFGHEJIAwSiLQtlwuO1AD_yk6Y6Ng-A-bvVNXZRVTyFSaGQ/exec"; // paste your Apps Script URL here
 
-    document.getElementById('sheetForm').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const formData = new FormData(e.target);
-      const json = Object.fromEntries(formData.entries());
+        document.getElementById('sheetForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            const json = Object.fromEntries(formData.entries());
 
-      const res = await fetch(scriptURL, {
-        method: 'POST',
-        body: JSON.stringify(json),
-        headers: { 'Content-Type': 'application/json' }
-      });
+            const res = await fetch(scriptURL, {
+                method: 'POST',
+                mode: 'cors',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(json),
+            });
 
-      const data = await res.json();
-      document.getElementById('response').textContent = data.message;
-      e.target.reset();
-    });
-  </script>
+            const data = await res.json();
+            document.getElementById('response').textContent = data.message;
+            e.target.reset();
+        });
+    </script>
 </body>
+
 </html>
